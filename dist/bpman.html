@@ -35,6 +35,7 @@ body {
 
 canvas#screen {
   display: block;
+  outline: none;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   touch-action: none;
@@ -54,6 +55,17 @@ canvas#screen {
   font-size: 13px;
   letter-spacing: 2px;
   color: #6f7bb0;
+}
+
+canvas#screen:focus-visible {
+  box-shadow:
+    0 0 0 2px #ffd75e,
+    0 0 34px rgba(255, 215, 94, 0.4),
+    0 0 90px rgba(255, 91, 208, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 </style>
 </head>
@@ -2488,7 +2500,7 @@ canvas#screen {
     bg.restore();
 
     if (Math.floor(G.t * 2) % 2) {
-      FT.text(bg, 'PRESS ENTER TO START', VIEW_W / 2, VIEW_H - 60,
+      FT.text(bg, 'PRESS ENTER OR CLICK TO START', VIEW_W / 2, VIEW_H - 60,
         { color: '#ffffff', align: 'center', scale: 2, shadow: '#ff5bd0' });
     }
     FT.text(bg, 'ARROWS / WASD  MOVE     SPACE  AURA     P  PAUSE     M  MUTE',
@@ -2562,9 +2574,13 @@ canvas#screen {
     loadLevel(true);
     G.state = 'title';
     window.addEventListener('keydown', keydown);
+    canvasEl.addEventListener('keydown', keydown);
+    canvasEl.setAttribute('tabindex', '0');
+    try { canvasEl.focus({ preventScroll: true }); } catch (e) { canvasEl.focus(); }
     bindTouch(canvasEl);
     canvasEl.addEventListener('mousedown', function () {
       A.resume();
+      try { canvasEl.focus({ preventScroll: true }); } catch (e) {}
       if (G.state === 'title' || G.state === 'gameover') newGame();
       else if (G.state === 'victory') continueEndless();
     });

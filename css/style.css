@@ -28,6 +28,7 @@ body {
 
 canvas#screen {
   display: block;
+  outline: none;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   touch-action: none;
@@ -47,4 +48,15 @@ canvas#screen {
   font-size: 13px;
   letter-spacing: 2px;
   color: #6f7bb0;
+}
+
+canvas#screen:focus-visible {
+  box-shadow:
+    0 0 0 2px #ffd75e,
+    0 0 34px rgba(255, 215, 94, 0.4),
+    0 0 90px rgba(255, 91, 208, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }

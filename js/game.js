@@ -945,7 +945,7 @@
     bg.restore();
 
     if (Math.floor(G.t * 2) % 2) {
-      FT.text(bg, 'PRESS ENTER TO START', VIEW_W / 2, VIEW_H - 60,
+      FT.text(bg, 'PRESS ENTER OR CLICK TO START', VIEW_W / 2, VIEW_H - 60,
         { color: '#ffffff', align: 'center', scale: 2, shadow: '#ff5bd0' });
     }
     FT.text(bg, 'ARROWS / WASD  MOVE     SPACE  AURA     P  PAUSE     M  MUTE',
@@ -1019,9 +1019,13 @@
     loadLevel(true);
     G.state = 'title';
     window.addEventListener('keydown', keydown);
+    canvasEl.addEventListener('keydown', keydown);
+    canvasEl.setAttribute('tabindex', '0');
+    try { canvasEl.focus({ preventScroll: true }); } catch (e) { canvasEl.focus(); }
     bindTouch(canvasEl);
     canvasEl.addEventListener('mousedown', function () {
       A.resume();
+      try { canvasEl.focus({ preventScroll: true }); } catch (e) {}
       if (G.state === 'title' || G.state === 'gameover') newGame();
       else if (G.state === 'victory') continueEndless();
     });
