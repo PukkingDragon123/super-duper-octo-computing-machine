@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = __dirname;
-const SCRIPTS = ['font', 'maze', 'face', 'sprites', 'city', 'audio', 'game'];
+const SCRIPTS = ['font', 'maze', 'face', 'human', 'sprites', 'city', 'traffic', 'audio', 'game'];
 
 const read = p => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const css = read('css/style.css');
@@ -25,10 +25,10 @@ const boot = `
   }
 })();`;
 
-const TITLE = 'BP MAN - MOG CITY';
+const TITLE = 'BP MAN - PSL CITY';
 const body = `<div id="stage">
-  <canvas id="screen" width="448" height="598"></canvas>
-  <div id="boot">LOADING MOG CITY...</div>
+  <canvas id="screen" width="448" height="610"></canvas>
+  <div id="boot">LOADING PSL CITY...</div>
 </div>`;
 
 const standalone = `<!doctype html>

@@ -1,106 +1,141 @@
-# BP MAN — MOG CITY
+# BP MAN — PSL CITY
 
-A high-resolution pixel-art maze chase in the Pac-Man tradition, except you are
-walking a neon city at night, the pellets are black pills, the power-ups are
-hammers, and the point is to **get handsome**.
+A high-resolution pixel-art maze chase through New York. You are on foot; so is
+everyone hunting you. Eat black pills, swing hammers, mog the haters, dodge the
+cabs and run the park.
 
-Every hater you mog sharpens your face. You start soft and round with wide doe
-eyes; twenty-four mogs later you have a mandible, hollow cheeks, stubble and
-hooded, tilted hunter eyes.
+Everything you do moves one number: your **PSL rating**, 1.00 to 10.00. Finishing
+with the highest PSL you can is the whole point.
 
 ![Title screen](docs/screenshot-title.png)
 
 ## Play it
 
 Open `index.html` in a browser. No build step, no dependencies, no server.
-
-There is also a single-file build at `dist/bpman.html` if you want one file you
-can email to someone.
+`dist/bpman.html` is the same game as a single file you can email to someone.
 
 ## Controls
 
 | Input | Action |
 | --- | --- |
-| Arrow keys / WASD | Walk |
+| Arrows / WASD | Walk |
+| Shift | **Run** — faster, burns stamina |
 | Space | **Aura burst** (when the meter is full) |
-| P | Pause |
-| M | Mute |
-| Enter | Start / restart |
-| Swipe, tap | Touch controls (tap = aura burst) |
+| P / M / Enter | Pause / mute / start |
+| Swipe, hold, tap | Touch: swipe to turn, hold to run, tap for aura |
 
-## How it plays
+## What moves your PSL
 
-- **Black pills** are the pellets. Each one is 10 points and a sliver of AURA.
-- **Hammers** are the power-ups. Grab one and the haters turn *cooked* — pale,
-  sweating and fleeing. Smash them for 200, 400, 800, 1600 in a chain.
-- **AURA** fills as you eat. At 100% press Space for an **aura burst**: a
-  shockwave that mogs every hater it touches, wherever they are on the block.
-  It costs the whole meter, so time it.
-- **Bonus pickups** appear mid-level — gym weights, mogger shades, a chin
-  chisel, a golden hammer (which also triggers hammer time), a crown.
-- **Every mog is a looksmax point.** Cross a threshold and the game stops for an
-  ascension cutscene showing your old face beside the new one, front and profile.
+| | |
+| --- | --- |
+| Black pill | +0.005 and a sliver of aura |
+| Hammer | +0.05, and every hater on the block turns *cooked* |
+| Mogging a hater | +0.15, plus 200 / 400 / 800 / 1600 in a chain |
+| Bonus pickup | +0.12 to +0.60 — gym pass, shades, chin chisel, gold hammer, crown |
+| Clearing a block | +0.30 |
+| Downing APEX | **+1.20** |
+| Getting clipped by a cab | **−0.35** and a knockdown — but never a life |
+| Caught by a hater | **−0.70** and a life |
+
+Gains taper as you climb — at PSL 8 you earn a quarter of what you did at PSL 2 —
+so the last stretch of the rating is the hard part.
 
 ![Gameplay](docs/screenshot-play.png)
 
-## The looksmax ladder
+## The ladder
 
-| Mogs | Tier | What changes |
+Your face is your score. Cross a gate and the game stops for an ascension
+cutscene showing the old face beside the new one, front and profile.
+
+| PSL | Tier | What changes |
 | --- | --- | --- |
-| 0 | SOFT | Round skull, doe eyes, soft mop |
-| 3 | SHARPENING | Taper begins, brows drop |
-| 8 | JAWLINE | Mandible flares, cheeks hollow, chin lights up |
-| 15 | HUNTER EYES | Hooded slits with positive canthal tilt, stubble |
-| 24 | GIGACHAD | Everything, plus the chain and the glow |
+| 1.0 | SOFT | Round skull, doe eyes, soft mop |
+| 3.0 | SHARPENING | Taper begins, brows drop |
+| 4.5 | JAWLINE | Mandible flares, cheeks hollow, chin lights up |
+| 6.0 | HUNTER EYES | Hooded slits with positive canthal tilt, stubble |
+| 7.5 | GIGACHAD | Everything, plus the chain and the white tank |
 
-![The five tiers](docs/looksmax-tiers.png)
+![The five tiers](docs/psl-tiers.png)
 
-Reach GIGACHAD *and* clear the city you are on to win. After that the city
-keeps going, faster, forever.
+## The city
+
+Four districts cycle: **THE BLOCK** (brownstone row), **THE PARK**, **MIDTOWN**
+(glass and steel) and **THE ROOF**, where APEX is waiting.
+
+Buildings are drawn as rooftops seen from above — tar, water towers, AC plants,
+skylights — and any building with a street below it gets a facade: brick,
+lintels, fire escapes, roll-down shutters, striped awnings and lit shopfronts.
+Streets get concrete sidewalks against the buildings, painted curbs that trace
+the maze, asphalt down the middle, manholes that steam and zebra stripes at the
+crossings.
+
+**Four avenues are live with traffic** — Fifth, Canal, Broadway and Park. Cabs,
+sedans, box trucks and the crosstown bus run them. Every car is telegraphed:
+headlights flare at the mouth of the avenue and the horn sounds before it enters.
+Cabs flatten haters too.
+
+![Traffic](docs/screenshot-traffic.png)
 
 ## The haters
 
-| | Name | Behaviour |
-| --- | --- | --- |
-| red | ENVY | Locks on and comes straight at you |
-| pink | SMIRK | Aims four tiles ahead of where you are going |
-| cyan | SHADE | Flanks, using ENVY's position to pincer you |
-| orange | LURK | Charges from range, backs off along your trail up close |
+They are people, not ghosts — same sprite system as you, with their own faces,
+builds and clothes. They walk when they are scattering, run when they are hunting
+you, and throw their hands up and bolt when you have a hammer.
 
-They alternate between scattering to their corners and hunting you, and they
-reverse direction on every phase change — same rhythm as the arcade original.
+| Name | Behaviour |
+| --- | --- |
+| **VIC** (red bomber, buzzcut) | Locks on and comes straight at you |
+| **DESH** (magenta hoodie, long fringe) | Aims four tiles ahead of where you are going |
+| **KAI** (cyan track top, headphones) | Flanks, using VIC's position to pincer you |
+| **RUSS** (orange puffer, beanie) | Charges from range, backs off along your trail up close |
+
+## APEX
+
+Every fourth block. He is bigger, faster than your walk, and he does not scatter —
+he just comes. Bare-handed contact costs a life and he takes no damage. **Hammer
+contact does 1, an aura burst does 2**, and he has 5 HP, so you need several
+hammer cycles to put him down. Beating him is the single biggest PSL jump in the
+game.
+
+![APEX](docs/screenshot-boss.png)
 
 ## How it's built
 
-Vanilla JS and a single 2D canvas. Everything is drawn at 1 art-pixel to 1
-canvas-pixel into an offscreen 448×598 buffer, then blitted to the visible
-canvas at an integer scale with smoothing off, so it stays genuinely crisp
-instead of being a blurry upscale.
+Vanilla JS and one 2D canvas. Everything is drawn at 1 art-pixel to 1
+canvas-pixel into an offscreen 448×610 buffer, then blitted to the visible canvas
+at an integer scale with smoothing off — genuinely crisp, not a blurry upscale.
 
 | File | What's in it |
 | --- | --- |
 | `js/font.js` | 5×7 bitmap arcade font |
-| `js/maze.js` | The 28×31 city grid and spawn points |
-| `js/face.js` | The parametric face — skull half-widths, eyes, brows, hair, stubble, all keyed off tier |
-| `js/sprites.js` | Walk cycles, haters, hammers, pills, bonus items |
-| `js/city.js` | Bakes the maze into buildings, neon trim, wet asphalt, lamp pools |
+| `js/maze.js` | The 28×31 block plan, the park, and which runs are avenues |
+| `js/face.js` | The parametric face — skull half-widths, eyes, brows, hair, stubble — with palette and expression overrides |
+| `js/human.js` | Bodies: hip-knee-foot skeleton, walk / run / panic / down, outlined so people read against the street |
+| `js/sprites.js` | Pills, hammers, bonus pickups, contact shadows |
+| `js/city.js` | Bakes the plan into New York: rooftops, facades, sidewalks, the park, steam and neon |
+| `js/traffic.js` | Cabs, sedans, trucks and the bus, drawn top-down with headlight wash |
 | `js/audio.js` | WebAudio synthesis — no sound files |
-| `js/game.js` | State machine, hater AI, aura mechanics, HUD, screens |
+| `js/game.js` | PSL, stamina, hater AI, the boss, the HUD and the screens |
 
-The face is the interesting part. Rather than five hand-drawn portraits, there
-is one renderer that interpolates a table of skull half-widths from SOFT to
-GIGACHAD and swaps discrete features (doe eyes → neutral → hooded slits, mop →
-faded cut, stubble on or off). The same 20×24 pixel routine draws the sprite in
-the maze, the HUD portrait at 2×, and the ascension cutscene at 4×.
+Two pieces are worth a look. **`face.js`** is one renderer that interpolates a
+table of skull half-widths from SOFT to GIGACHAD and swaps discrete features
+(doe eyes → neutral → hooded slits, mop → faded cut, stubble on or off). The same
+20×24 routine draws the sprite in the street, the HUD portrait at 2× and the
+ascension cutscene at 4×. **`human.js`** builds everyone — you, the four haters
+and APEX — from that face plus a parameterised body, so a new character is a
+dozen lines of palette and outfit.
+
+![The cast](docs/cast-sheet.png)
 
 ## Development
 
 ```sh
-node build.js              # bundle to dist/
+node build.js                # bundle to dist/
 node tools/validate-maze.js  # every pill reachable, rows well formed
-node tools/playtest.js       # 20 headless gameplay assertions
-node tools/shot.js           # screenshots + sprite sheets
+node tools/playtest.js       # 29 headless gameplay assertions
+node tools/shot.js           # gameplay screenshots
+node tools/sheet.js          # cast sprite sheet
 ```
 
-The tooling scripts need Playwright (`npm i playwright`) and a Chromium binary;
-the game itself needs nothing.
+The tooling needs Playwright (`npm i playwright`) and a Chromium binary; the game
+itself needs nothing.

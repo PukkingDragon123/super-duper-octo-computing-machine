@@ -105,6 +105,16 @@
         tone({ type: 'square', from: f, to: f * 0.98, dur: 0.24, vol: 0.22, delay: i * 0.19 });
       });
     },
+    horn: function () {
+      tone({ type: 'square', from: 330, to: 330, dur: 0.16, vol: 0.16 });
+      tone({ type: 'square', from: 247, to: 247, dur: 0.16, vol: 0.14 });
+      tone({ type: 'square', from: 330, to: 300, dur: 0.22, vol: 0.13, delay: 0.2 });
+    },
+    crash: function () {
+      noise({ freq: 3000, freqTo: 180, dur: 0.4, vol: 0.4, filter: 'lowpass' });
+      tone({ type: 'sawtooth', from: 180, to: 40, dur: 0.45, vol: 0.28 });
+      tone({ type: 'square', from: 900, to: 120, dur: 0.2, vol: 0.18 });
+    },
     ui: function () { tone({ type: 'square', from: 700, to: 900, dur: 0.05, vol: 0.14 }); }
   };
 

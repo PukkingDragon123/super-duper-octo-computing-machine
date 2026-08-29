@@ -22,7 +22,7 @@ while (q.length) {
     if (nr === m.TUNNEL_ROW) { if (nc < 0) nc = m.COLS - 1; if (nc >= m.COLS) nc = 0; }
     if (nc < 0 || nc >= m.COLS || nr < 0 || nr >= m.ROWS) continue;
     const t = grid[nr][nc];
-    if (t === m.WALL || t === m.GATE) continue;
+    if (t === m.WALL || t === m.GATE || t === m.TREE) continue;
     const k = nc + ',' + nr;
     if (!seen.has(k)) { seen.add(k); q.push([nc, nr]); }
   }

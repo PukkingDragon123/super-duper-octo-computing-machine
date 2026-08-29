@@ -32,19 +32,42 @@ const fs = require('fs');
   // force interesting states through the exposed game state
   await page.evaluate(() => {
     const G = window.BP.game.state;
-    G.tier = 4; G.mogs = 30; G.aura = 100;
+    G.psl = 7.9; G.tier = 4; G.mogs = 18; G.aura = 100;
     G.mogTimer = 8;
-    G.rivals.forEach(r => { if (r.mode === 'roam' || r.mode === 'house') { r.mode = 'cooked'; } });
+    G.rivals.forEach(r => { if (r.mode === 'roam' || r.mode === 'club') { r.mode = 'cooked'; } });
+    G.carTimer = 0.05;
   });
   await page.waitForTimeout(500);
   await page.screenshot({ path: path.join(out, '04-mogmode.png') });
 
   await page.evaluate(() => {
     const G = window.BP.game.state;
-    G.ascendFrom = 1; G.ascendTo = 3; G.state = 'ascend'; G.stateT = 1.2;
+    G.ascendFrom = 1; G.ascendTo = 3; G.tier = 3; G.state = 'ascend'; G.stateT = 1.2;
   });
   await page.waitForTimeout(200);
   await page.screenshot({ path: path.join(out, '05-ascend.png') });
+
+  // traffic: force a cab onto the avenue the player is standing on
+  await page.evaluate(() => {
+    const g = window.BP.game, G = g.state;
+    G.state = 'play'; G.mogTimer = 0; G.aura = 40;
+    G.cars = [];
+    for (let i = 0; i < 3; i++) { const c = window.BP.traffic.spawn(1, null); if (c) { c.warn = 0; G.cars.push(c); } }
+  });
+  await page.waitForTimeout(700);
+  await page.screenshot({ path: path.join(out, '07-traffic.png') });
+
+  // the boss block
+  await page.evaluate(() => {
+    window.BP.game._newGame(4);
+  });
+  await page.evaluate(() => {
+    const g = window.BP.game, G = g.state;
+    G.state = 'play'; G.psl = 8.2; G.tier = 4;
+    if (G.boss) { G.boss.stun = 0; G.boss.hp = 4; }
+  });
+  await page.waitForTimeout(1200);
+  await page.screenshot({ path: path.join(out, '08-boss.png') });
 
   // face sheet: every tier, every view, big
   const sheet = await page.evaluate(() => {
@@ -69,30 +92,6 @@ const fs = require('fs');
     return b.c.toDataURL();
   });
   fs.writeFileSync(path.join(out, '06-faces.png'), Buffer.from(sheet.split(',')[1], 'base64'));
-
-  // sprite sheet: player walk + rivals
-  const sprites = await page.evaluate(() => {
-    const S = window.BP.sprites;
-    const SC = 4, pad = 6;
-    const w = 8 * (S.PW * SC + pad) + pad, h = 3 * (S.PH * SC + pad) + pad;
-    const b = S.canvas(w, h);
-    b.g.fillStyle = '#0a0b14'; b.g.fillRect(0, 0, w, h);
-    b.g.imageSmoothingEnabled = false;
-    let i = 0;
-    ['front', 'side', 'back'].forEach((v, r) => {
-      i = 0;
-      for (let t = 0; t < 5; t++) {
-        const img = S.player(v, t, 0, 0, 'walk');
-        b.g.drawImage(img, pad + (i++) * (S.PW * SC + pad), pad + r * (S.PH * SC + pad), S.PW * SC, S.PH * SC);
-      }
-      for (let k = 0; k < 3; k++) {
-        const img = S.rival(k, r === 1 ? 'cooked' : 'hunt', 0, -1, 0);
-        b.g.drawImage(img, pad + (i++) * (S.PW * SC + pad), pad + r * (S.PH * SC + pad), S.RW * SC, S.RH * SC);
-      }
-    });
-    return b.c.toDataURL();
-  });
-  fs.writeFileSync(path.join(out, '07-sprites.png'), Buffer.from(sprites.split(',')[1], 'base64'));
 
   await browser.close();
   if (errors.length) { console.log('ERRORS:\n' + errors.join('\n')); process.exit(1); }
