@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>BP MAN - MOG CITY</title>
+<meta name="description" content="A high-resolution pixel-art Pac-Man-style game: eat black pills, swing hammers, mog the haters and looksmax your way to a jawline and hunter eyes.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="screen" width="448" height="598"></canvas>
+  <div id="boot">LOADING MOG CITY...</div>
+</div>
+<script src="js/font.js"></script>
+<script src="js/maze.js"></script>
+<script src="js/face.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/city.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/game.js"></script>
+<script>
+  (function () {
+    var boot = document.getElementById('boot');
+    try {
+      window.BP.game.start(document.getElementById('screen'));
+      boot.parentNode.removeChild(boot);
+    } catch (err) {
+      boot.textContent = 'FAILED TO BOOT: ' + err.message;
+      throw err;
+    }
+  })();
+</script>
+</body>
+</html>
